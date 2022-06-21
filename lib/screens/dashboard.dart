@@ -156,7 +156,7 @@ class _DashboardState extends State<Dashboard> {
                                   height: 170,
                                   child: Container(
                                       margin: const EdgeInsets.all(3),
-                                      child: imageOne.isNotEmpty
+                                      child: imageTwo.isNotEmpty
                                           ? FadeInImage.memoryNetwork(
                                               fit: BoxFit.cover,
                                               placeholder: kTransparentImage,

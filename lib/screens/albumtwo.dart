@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pictureapp/screens/add_image.dart';
 import 'package:pictureapp/screens/dashboard.dart';
 import 'package:pictureapp/services/firebase_services.dart';
@@ -99,25 +100,82 @@ class _AlbumTwoState extends State<AlbumTwo> {
                                               height: 30,
                                             ),
                                             Center(
-                                              child: InkWell(
-                                                onTap: () {
-                                                  FirebaseFirestore.instance
-                                                      .collection('imageURLs')
-                                                      .doc(snapshot
-                                                          .data!.docs[index].id)
-                                                      .update({
-                                                    'audience': 'public'
-                                                  });
-                                                  Navigator.of(context).pop();
-                                                },
-                                                child: const Text(
-                                                  'Enable public viewing',
-                                                  style: TextStyle(
-                                                      fontSize: 16,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ),
-                                              ),
+                                              child: snapshot.data!.docs[index]
+                                                          .get('audience')
+                                                          .toString() ==
+                                                      'private'
+                                                  ? InkWell(
+                                                      onTap: () {
+                                                        FirebaseFirestore
+                                                            .instance
+                                                            .collection(
+                                                                'imageURLs')
+                                                            .doc(snapshot.data!
+                                                                .docs[index].id)
+                                                            .update({
+                                                          'audience': 'public'
+                                                        });
+                                                        Navigator.of(context)
+                                                            .pop();
+                                                        Fluttertoast.showToast(
+                                                            msg:
+                                                                "Public can now view the post",
+                                                            toastLength: Toast
+                                                                .LENGTH_LONG,
+                                                            gravity:
+                                                                ToastGravity
+                                                                    .CENTER,
+                                                            backgroundColor:
+                                                                Colors.blue,
+                                                            textColor:
+                                                                Colors.white,
+                                                            fontSize: 16.0);
+                                                      },
+                                                      child: const Text(
+                                                        'Enable public viewing',
+                                                        style: TextStyle(
+                                                            fontSize: 16,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      ),
+                                                    )
+                                                  : InkWell(
+                                                      onTap: () {
+                                                        FirebaseFirestore
+                                                            .instance
+                                                            .collection(
+                                                                'imageURLs')
+                                                            .doc(snapshot.data!
+                                                                .docs[index].id)
+                                                            .update({
+                                                          'audience': 'private'
+                                                        });
+                                                        Navigator.of(context)
+                                                            .pop();
+                                                        Fluttertoast.showToast(
+                                                            msg:
+                                                                "Only you can view this post",
+                                                            toastLength: Toast
+                                                                .LENGTH_LONG,
+                                                            gravity:
+                                                                ToastGravity
+                                                                    .CENTER,
+                                                            backgroundColor:
+                                                                Colors.blue,
+                                                            textColor:
+                                                                Colors.white,
+                                                            fontSize: 16.0);
+                                                      },
+                                                      child: const Text(
+                                                        'Make this post private',
+                                                        style: TextStyle(
+                                                            fontSize: 16,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      ),
+                                                    ),
                                             ),
                                             const SizedBox(
                                               height: 30,
