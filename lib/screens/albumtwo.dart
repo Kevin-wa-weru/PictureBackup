@@ -24,6 +24,11 @@ class _AlbumTwoState extends State<AlbumTwo> {
           title: const Text('Album Two')),
       body: Column(
         children: [
+          const SizedBox(height: 30),
+          const Center(
+            child: Text('Tap on an image for further settings'),
+          ),
+          const SizedBox(height: 30),
           Expanded(
             child: StreamBuilder<QuerySnapshot>(
               stream: FirebaseFirestore.instance
